@@ -33,11 +33,16 @@ public class UserController {
         return new ResponseEntity<>(userService.update(user),HttpStatus.ACCEPTED);
     }
 
-    /*
-    @PutMapping
-    public ResponseEntity<?> removeUser(@RequestBody String id){
-        userService.remove(id);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }*/
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<?> removeUser(@PathVariable String id){
+
+        if (!(userService.getById(id) == null)){
+            userService.remove(id);
+            return new ResponseEntity<>("User "+id+ " Removed Successfully",HttpStatus.ACCEPTED);
+        }else{
+            return new ResponseEntity<>("User "+id+ " Doesn't exist",HttpStatus.ACCEPTED);
+        }
+
+    }
 
 }
